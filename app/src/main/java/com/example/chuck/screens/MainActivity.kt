@@ -1,17 +1,17 @@
-package com.example.chuck
+package com.example.chuck.screens
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
-import android.widget.Toast
+import com.example.chuck.*
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var pager: ViewPager // creating object of ViewPager
-    private lateinit var tab: TabLayout  // creating object of TabLayout
-    private lateinit var bar: Toolbar    // creating object of ToolBar
+    private lateinit var tab: TabLayout // creating object of TabLayout
+    private lateinit var bar: Toolbar // creating object of ToolBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

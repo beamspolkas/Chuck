@@ -6,13 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fff"
-    tools:context=".SplashScreen">
+    tools:context=".screens.SplashScreen">
 
     <ImageView
         android:id="@+id/SplashScreenImage"
         android:layout_width="300dp"
         android:layout_height="250dp"
-        android:src="@drawable/geeksforgeeks"
+        android:src="@drawable/splash_screen"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
