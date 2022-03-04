@@ -1,8 +1,11 @@
 package com.example.chuck.screens
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.example.chuck.*
@@ -10,12 +13,16 @@ import com.example.chuck.adapters.ViewPagerAdapter
 import com.example.chuck.fragments.CategoriesFragment
 import com.example.chuck.fragments.JokeSearcherFragment
 import com.example.chuck.fragments.RandomJokeFragment
+import com.example.chuck.model.MainViewModel
+import com.example.chuck.model.MainViewModelFactory
+import com.example.chuck.repository.Repository
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var pager: ViewPager // creating object of ViewPager
     private lateinit var tab: TabLayout // creating object of TabLayout
     private lateinit var bar: Toolbar // creating object of ToolBar
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

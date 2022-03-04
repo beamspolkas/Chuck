@@ -27,7 +27,6 @@ class RecyclerViewAdapter(private val mList: MutableList<String>) : RecyclerView
 
         // sets the text to the textview from our itemHolder class
         holder.textView.text = itemsViewModel
-
     }
 
     // return the number of the items in the list
@@ -38,5 +37,9 @@ class RecyclerViewAdapter(private val mList: MutableList<String>) : RecyclerView
     // Holds the views for adding it to image and text
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
         val textView: TextView = itemView.findViewById(R.id.textView)
+        val title: TextView = itemView.findViewById(R.id.title)
+        val body: TextView = itemView.findViewById(R.id.body)
+        val userId: TextView = itemView.findViewById(R.id.userId)
+        // przekazać title, body, id
     }
 }
