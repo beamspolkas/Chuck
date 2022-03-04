@@ -19,7 +19,7 @@ class CategoriesFragment : Fragment() {
     }
 
     private fun init() {
-        val adapter = RecyclerViewAdapter(listOf("list1","list2","list3"))
+        val adapter = RecyclerViewAdapter(mutableListOf("list1","list2","list3"))
         val recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerViewCategories)
         recyclerView?.adapter = adapter
         recyclerView?.layoutManager = LinearLayoutManager(requireContext(),VERTICAL,false)

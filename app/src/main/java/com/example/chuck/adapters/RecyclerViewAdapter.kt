@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chuck.R
 
-class RecyclerViewAdapter (private val mList: List<TextView>) : RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
+class RecyclerViewAdapter(private val mList: MutableList<String>) : RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
 
     // create new views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -26,7 +26,7 @@ class RecyclerViewAdapter (private val mList: List<TextView>) : RecyclerView.Ada
         val itemsViewModel = mList[position]
 
         // sets the text to the textview from our itemHolder class
-        holder.textView.text = itemsViewModel.text
+        holder.textView.text = itemsViewModel
 
     }
 
