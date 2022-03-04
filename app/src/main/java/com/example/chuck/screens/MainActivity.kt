@@ -1,17 +1,15 @@
 package com.example.chuck.screens
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.example.chuck.*
-import com.example.chuck.tabs.Categories
-import com.example.chuck.tabs.JokeSearcher
-import com.example.chuck.tabs.RandomJoke
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import com.example.chuck.adapters.ViewPagerAdapter
+import com.example.chuck.fragments.CategoriesFragment
+import com.example.chuck.fragments.JokeSearcherFragment
+import com.example.chuck.fragments.RandomJokeFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,14 +33,16 @@ class MainActivity : AppCompatActivity() {
         val adapter = ViewPagerAdapter(supportFragmentManager)
 
         //add fragment to the list
-        adapter.addFragment(Categories(), "Categories")
-        adapter.addFragment(RandomJoke(), "Random Joke")
-        adapter.addFragment(JokeSearcher(), "Joke Searcher")
+        adapter.addFragment(CategoriesFragment(), "Categories")
+        adapter.addFragment(RandomJokeFragment(), "Random Joke")
+        adapter.addFragment(JokeSearcherFragment(), "Joke Searcher")
 
         // Adding the Adapter to the ViewPager
         pager.adapter = adapter
         //bind the viewPager with the TabLayout.
         tab.setupWithViewPager(pager)
+
+
 
     }
 }
