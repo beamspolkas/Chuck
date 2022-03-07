@@ -6,12 +6,17 @@ import androidx.appcompat.widget.Toolbar
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.example.chuck.*
+import com.example.chuck.adapters.ViewPagerAdapter
+import com.example.chuck.fragments.CategoriesFragment
+import com.example.chuck.fragments.JokeSearcherFragment
+import com.example.chuck.fragments.RandomJokeFragment
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var pager: ViewPager // creating object of ViewPager
     private lateinit var tab: TabLayout // creating object of TabLayout
     private lateinit var bar: Toolbar // creating object of ToolBar
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,9 +34,9 @@ class MainActivity : AppCompatActivity() {
         val adapter = ViewPagerAdapter(supportFragmentManager)
 
         //add fragment to the list
-        adapter.addFragment(Categories(), "Categories")
-        adapter.addFragment(RandomJoke(), "Random Joke")
-        adapter.addFragment(JokeSearcher(), "Joke Searcher")
+        adapter.addFragment(CategoriesFragment(), "Categories")
+        adapter.addFragment(RandomJokeFragment(), "Random Joke")
+        adapter.addFragment(JokeSearcherFragment(), "Joke Searcher")
 
         // Adding the Adapter to the ViewPager
         pager.adapter = adapter
