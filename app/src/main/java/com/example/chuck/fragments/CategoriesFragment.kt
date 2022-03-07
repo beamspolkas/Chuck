@@ -16,6 +16,7 @@ import com.example.chuck.adapters.RecyclerViewAdapter
 import com.example.chuck.model.MainViewModel
 import com.example.chuck.model.MainViewModelFactory
 import com.example.chuck.repository.Repository
+import com.example.chuck.screens.MainActivity
 
 class CategoriesFragment : Fragment() {
 
@@ -43,7 +44,7 @@ class CategoriesFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
         viewModel.getPost()
         viewModel.myResponse.observe(
-            viewLifecycleOwner,
+            this,
             Observer { response -> //w tutorialu (this, Observer )
                 if(response.isSuccessful){
                     Log.d("Response", response.body()?.userId.toString())
