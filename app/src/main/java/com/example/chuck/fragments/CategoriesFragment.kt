@@ -15,8 +15,8 @@ import com.example.chuck.R
 import com.example.chuck.adapters.RecyclerViewAdapter
 import com.example.chuck.model.MainViewModel
 import com.example.chuck.model.MainViewModelFactory
+import com.example.chuck.model.Post
 import com.example.chuck.repository.Repository
-import com.example.chuck.screens.MainActivity
 
 class CategoriesFragment : Fragment() {
 
@@ -34,7 +34,7 @@ class CategoriesFragment : Fragment() {
         //part 3: https://www.youtube.com/watch?v=uCJuprbXJk4
         //przeniesienie do fragmentu: https://www.youtube.com/watch?v=HGrFPWUCFNg
 
-        val adapter = RecyclerViewAdapter(mutableListOf("list1","list2","list3"))
+        val adapter = RecyclerViewAdapter(mutableListOf())
         val recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerViewCategories)
         recyclerView?.adapter = adapter
         recyclerView?.layoutManager = LinearLayoutManager(requireContext(),VERTICAL,false)
@@ -44,16 +44,19 @@ class CategoriesFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
         viewModel.getPost()
         viewModel.myResponse.observe(
-            this,
-            Observer { response -> //w tutorialu (this, Observer )
+            viewLifecycleOwner,
+            Observer { response ->
                 if(response.isSuccessful){
-                    Log.d("Response", response.body()?.userId.toString())
-                    Log.d("Response", response.body()?.id.toString())
-                    textView.text = response.body()?.title!!
-                    Log.d("Response", response.body()?.body!!)
+//                    Log.d("Response - user ID: ", response.body()?.userId.toString())
+//                    Log.d("Response - ID: ", response.body()?.id.toString())
+//                    Log.d("Response - title: ", response.body()?.title!!)
+//                    Log.d("Response - body: ", response.body()?.body!!)
+                    val list = mutableListOf<Post>()
+                    response.body()?.let { list.add(it) }
+                    adapter.setData(list)
                 } else {
-                    Log.d("Response", response.errorBody().toString())
-                    textView.text = response.code().toString()
+                    Log.d("Response - error: ", response.errorBody().toString())
+                    //textView.text = response.code().toString()
                 }
             },
         )
