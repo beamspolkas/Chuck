@@ -1,6 +1,7 @@
 package com.example.chuck.adapters
 
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -34,6 +35,7 @@ class RecyclerViewAdapter(private val mList: MutableList<Post>) : RecyclerView.A
         return mList.size
     }
 
+    @SuppressLint("NotifyDataSetChanged")//dodane
     fun setData(body: MutableList<Post>) {
         mList.clear()
         mList.addAll(body)

@@ -17,6 +17,7 @@ import com.example.chuck.model.MainViewModel
 import com.example.chuck.model.MainViewModelFactory
 import com.example.chuck.model.Post
 import com.example.chuck.repository.Repository
+import retrofit2.Response
 
 class CategoriesFragment : Fragment() {
 
@@ -29,11 +30,6 @@ class CategoriesFragment : Fragment() {
 
     private fun init() {
 
-        //part 1:
-        //part 2: https://www.youtube.com/watch?v=Dw_BIR5K82Q
-        //part 3: https://www.youtube.com/watch?v=uCJuprbXJk4
-        //przeniesienie do fragmentu: https://www.youtube.com/watch?v=HGrFPWUCFNg
-
         val adapter = RecyclerViewAdapter(mutableListOf())
         val recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerViewCategories)
         recyclerView?.adapter = adapter
@@ -41,26 +37,35 @@ class CategoriesFragment : Fragment() {
 
         val repository = Repository()
         val viewModelFactory = MainViewModelFactory(repository)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
-        viewModel.getPost()
-        viewModel.myResponse.observe(
-            viewLifecycleOwner,
-            Observer { response ->
-                if(response.isSuccessful){
-//                    Log.d("Response - user ID: ", response.body()?.userId.toString())
-//                    Log.d("Response - ID: ", response.body()?.id.toString())
-//                    Log.d("Response - title: ", response.body()?.title!!)
-//                    Log.d("Response - body: ", response.body()?.body!!)
-                    val list = mutableListOf<Post>()
-                    response.body()?.let { list.add(it) }
-                    adapter.setData(list)
-                } else {
-                    Log.d("Response - error: ", response.errorBody().toString())
-                    //textView.text = response.code().toString()
-                }
-            },
-        )
-
+        viewModel = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
+        Log.d("KLASA1: ", viewModel.javaClass.toString())
+        viewModel.getPosts()
+        Log.d("KLASA2: ", viewModel.getPosts().javaClass.toString())
+        viewModel.myResponses.observe(viewLifecycleOwner, Observer {
+            Log.d("KLASA3: ", viewModel.myResponses.javaClass.toString())
+            for (response in it) {
+                val list = mutableListOf<Post>()
+//                response.body()?.let { list.add() }
+//                adapter.setData(list)
+//                TUTAJ BRAK CZEGOS
+            }
+        })
+//viewModel.getPost()
+//          viewModel.myResponse.observe(
+//            viewLifecycleOwner,
+//            Observer { response ->
+//                if(response.isSuccessful){
+////                    Log.d("Response - user ID: ", response.body()?.userId.toString())
+////                    Log.d("Response - body: ", response.body()?.body!!)
+//                    val list = mutableListOf<Post>()
+//                    response.body()?.let { list.add(it) }
+//                    adapter.setData(list)
+//                } else {
+//                    Log.d("Response - error: ", response.errorBody().toString())
+////                    textView.text = response.code().toString()
+//                }
+//            },
+//        )
     }
 
     //inflate the layout
