@@ -17,7 +17,6 @@ import com.example.chuck.model.MainViewModel
 import com.example.chuck.model.MainViewModelFactory
 import com.example.chuck.model.Post
 import com.example.chuck.repository.Repository
-import retrofit2.Response
 
 class CategoriesFragment : Fragment() {
 
@@ -38,17 +37,20 @@ class CategoriesFragment : Fragment() {
         val repository = Repository()
         val viewModelFactory = MainViewModelFactory(repository)
         viewModel = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
-        Log.d("KLASA1: ", viewModel.javaClass.toString())
+//        Log.d("KLASA1: ", viewModel.javaClass.toString())
         viewModel.getPosts()
-        Log.d("KLASA2: ", viewModel.getPosts().javaClass.toString())
         viewModel.myResponses.observe(viewLifecycleOwner, Observer {
-            Log.d("KLASA3: ", viewModel.myResponses.javaClass.toString())
-            for (response in it) {
-                val list = mutableListOf<Post>()
-//                response.body()?.let { list.add() }
-//                adapter.setData(list)
+            if (it.isEmpty()) {
+
+            } else {
+                for (response in it) {
+//                    val list = mutableListOf<Post>()
+//                    response.body()?.let { list.add() }
+//                    adapter.setData(list)
 //                TUTAJ BRAK CZEGOS
+                }
             }
+
         })
 //viewModel.getPost()
 //          viewModel.myResponse.observe(

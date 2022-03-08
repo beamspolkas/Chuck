@@ -24,7 +24,7 @@ class MainViewModel(private val repository: Repository): ViewModel() {
     fun getPosts(){
         viewModelScope.launch {
             val responses: List<Response<Post>> = repository.getPosts()
-            myResponses.value = responses//?????
+            myResponses.value = responses
         }
     }
 

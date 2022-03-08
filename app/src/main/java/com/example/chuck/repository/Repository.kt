@@ -12,6 +12,6 @@ class Repository {
     }
 
     suspend fun getPosts() : List<Response<Post>> {
-        return listOf(RetrofitInstance.api.getPost())
+        return RetrofitInstance.api.getPosts()
     }
 }
