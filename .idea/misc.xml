@@ -11,12 +11,15 @@
         <entry key="app/src/main/res/layout/fragment_code.xml" value="0.2672239108409321" />
         <entry key="app/src/main/res/layout/fragment_geeks.xml" value="0.2672239108409321" />
         <entry key="app/src/main/res/layout/fragment_leet.xml" value="0.2672239108409321" />
-        <entry key="app/src/main/res/layout/fragment_random.xml" value="0.1474164133738602" />
-        <entry key="app/src/main/res/layout/fragment_searcher.xml" value="0.1474164133738602" />
+        <entry key="app/src/main/res/layout/fragment_random.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/fragment_searcher.xml" value="0.335" />
         <entry key="app/src/main/res/layout/frame_textview.xml" value="0.1474164133738602" />
         <entry key="app/src/main/res/layout/layout.xml" value="0.1405775075987842" />
         <entry key="app/src/main/res/layout/list_view.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/list_view_category.xml" value="0.303125" />
         <entry key="app/src/main/res/layout/list_view_item.xml" value="0.38385416666666666" />
+        <entry key="app/src/main/res/layout/list_view_joke_search.xml" value="0.35052083333333334" />
+        <entry key="app/src/main/res/layout/list_view_random_joke.xml" value="0.303125" />
         <entry key="app/src/main/res/layout/recycler_view.xml" value="0.26902173913043476" />
         <entry key="app/src/main/res/layout/rowlayout.xml" value="0.1474164133738602" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />

@@ -7,11 +7,11 @@ import retrofit2.Response
 
 class Repository {
 
-    suspend fun getPost() : Response<Post> {
-        return RetrofitInstance.api.getPost()
+    suspend fun getPost(number: Int) : Response<Post> {
+        return RetrofitInstance.api.getPost(number)
     }
 
-    suspend fun getPosts() : List<Response<Post>> {
+    suspend fun getPosts() : Response<List<Post>> {
         return RetrofitInstance.api.getPosts()
     }
 }
