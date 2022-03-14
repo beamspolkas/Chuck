@@ -12,12 +12,11 @@ class RecyclerCategoriesViewAdapter(private val mList: MutableList<Post>) : Recy
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.list_view_category, parent, false)
+            .inflate(R.layout.list_view_category, parent, false)//moze tutaj?
 
         return CategoryViewHolder(view)
     }
 
-    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holderCategory: CategoryViewHolder, position: Int) {
 
         val itemsViewModel = mList[position]

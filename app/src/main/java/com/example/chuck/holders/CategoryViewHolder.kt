@@ -10,8 +10,4 @@ class CategoryViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val body: TextView = view.findViewById(R.id.body)
     val userId: TextView = view.findViewById(R.id.userId)
     val title: TextView = view.findViewById(R.id.title)
-
-//    fun bindData(data: String){
-//        id.text = data
-//    }
 }

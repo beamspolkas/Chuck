@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chuck.R
-import com.example.chuck.R.id.recyclerViewSearcher
 import com.example.chuck.adapters.RecyclerCategoriesViewAdapter
 import com.example.chuck.model.MainViewModel
 import com.example.chuck.model.MainViewModelFactory
@@ -24,35 +23,23 @@ import com.example.chuck.repository.Repository
 class JokeSearcherFragment : Fragment() {
 
     private lateinit var viewModel: MainViewModel
-    private val recyclerView = view?.findViewById<RecyclerView>(recyclerViewSearcher)
-    private val adapter = RecyclerCategoriesViewAdapter(mutableListOf())
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: RecyclerCategoriesViewAdapter
+    private val repository = Repository()
+    private val viewModelFactory = MainViewModelFactory(repository)
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        init()
-    }
-
-    private fun init() {
-        val repository = Repository()
-        val viewModelFactory = MainViewModelFactory(repository)
+        recyclerView = view.findViewById(R.id.recyclerViewSearcher)
+        adapter = RecyclerCategoriesViewAdapter(mutableListOf())
+        recyclerView.layoutManager = LinearLayoutManager(requireContext(), VERTICAL, false)
+        recyclerView.adapter = adapter
         viewModel = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
 
         setOnClickListener()
+    }
 
-        viewModel.myResponse.observe(viewLifecycleOwner, Observer {
-                response ->
-            if(response.isSuccessful){
-                val list = mutableListOf<Post>()
-                response.body()?.let { list.add(it) }
-                adapter.setData(list)
-
-            } else {
-                Log.d("Response - error: ", response.errorBody().toString())
-            }
-        })
-     }
-
-    //inflate the layout
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -61,21 +48,25 @@ class JokeSearcherFragment : Fragment() {
         inflater.inflate(R.layout.fragment_searcher, container, false)!!
 
     private fun setOnClickListener(){
-        recyclerView?.adapter = adapter
-        recyclerView?.layoutManager = LinearLayoutManager(requireContext(), VERTICAL, false)
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(requireContext(), VERTICAL, false)
         val searchButton = view?.findViewById<ImageButton>(R.id.btn_search)
         val numberEditText = view?.findViewById<TextView>(R.id.number_editText)
-//        val bodyTextView = view?.findViewById<TextView>(R.id.body)
-//        val userIdTextView = view?.findViewById<TextView>(R.id.userId)
-//        val idTextView = view?.findViewById<TextView>(R.id.id)
-//        val titleTextView = view?.findViewById<TextView>(R.id.title)
         searchButton?.setOnClickListener{
             val myNumber = numberEditText?.text.toString()
             viewModel.getPost(Integer.parseInt(myNumber))
-
+            viewModel.myResponse.observe(viewLifecycleOwner, Observer {
+                    response ->
+                if(response.isSuccessful){
+                    val list = mutableListOf<Post>()
+                    response.body()?.let { list.add(it) }
+                    adapter.setData(list)
+                } else {
+                    Log.d("Response - error: ", response.errorBody().toString())
+                }
+            })
             //zebrac parametr z edit text, wkleic do funkcji api, jezeli funkcja api ma response to wkleic do recyclerView
             //obluzyc wyjatki (brak danych, bledne dane, etc.)
         }
     }
-
 }
