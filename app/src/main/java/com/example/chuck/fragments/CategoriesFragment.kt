@@ -6,13 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chuck.R
-import com.example.chuck.adapters.RecyclerCategoriesViewAdapter
+import com.example.chuck.adapters.RecyclerViewAdapter
 import com.example.chuck.model.MainViewModel
 import com.example.chuck.model.MainViewModelFactory
 import com.example.chuck.repository.Repository
@@ -20,37 +19,34 @@ import com.example.chuck.repository.Repository
 class CategoriesFragment : Fragment() {
 
     private lateinit var viewModel: MainViewModel
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: RecyclerViewAdapter
+    private val repository = Repository()
+    private val viewModelFactory = MainViewModelFactory(repository)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        recyclerView = view.findViewById(R.id.recyclerViewCategories)
+        adapter = RecyclerViewAdapter(mutableListOf())
+        recyclerView.layoutManager = LinearLayoutManager(requireContext(), VERTICAL, false)
+        recyclerView.adapter = adapter
+        viewModel = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
         init()
     }
 
     private fun init() {
-
-        val adapter = RecyclerCategoriesViewAdapter(mutableListOf())
-        val recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerViewCategories)
-        recyclerView?.adapter = adapter
-        recyclerView?.layoutManager = LinearLayoutManager(requireContext(),VERTICAL,false)
-
-        val repository = Repository()
-        val viewModelFactory = MainViewModelFactory(repository)
-        viewModel = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
-        viewModel.getPosts()
-//        Log.d("KLASA2: ", viewModel.getPosts().javaClass.toString())
-//        Log.d("KLASA2: ", viewModel.myResponses.javaClass.toString())
-        viewModel.myResponses.observe(viewLifecycleOwner, Observer {
-            responses ->
-            if(responses.isSuccessful){
-                responses.body()?.let { adapter.setData(it.toMutableList()) }
+        viewModel.getCategories()
+        viewModel.myStringResponse.observe(viewLifecycleOwner) { responses ->
+            if (responses.isNotEmpty()) {
+                for (response in responses) {
+                    Log.d("Response - string: ", response)
+                }
             } else {
-                Log.d("Response - error: ", responses.errorBody().toString())
+                Log.d("Response - error: ", responses.toString())
             }
-        })
-
+        }
     }
 
-    //inflate the layout
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

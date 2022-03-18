@@ -1,5 +1,6 @@
 package com.example.chuck.screens
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -7,6 +8,7 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.example.chuck.R
 
+@SuppressLint("CustomSplashScreen")
 @Suppress("DEPRECATION")
 class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,7 +28,7 @@ class SplashScreenActivity : AppCompatActivity() {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
-        }, 2000) // 2000 is the delayed time in milliseconds.
+        }, 1500) // 15300 is the delayed time in milliseconds.
     }
 }
 

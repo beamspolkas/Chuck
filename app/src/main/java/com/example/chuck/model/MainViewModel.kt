@@ -9,21 +9,28 @@ import retrofit2.Response
 
 class MainViewModel(private val repository: Repository): ViewModel() {
 
-    val myResponse: MutableLiveData<Response<Post>> = MutableLiveData()
+    val myResponse: MutableLiveData<Response<PostList>> = MutableLiveData()
+    val myPostResponse: MutableLiveData<Response<Post>> = MutableLiveData()
+    val myStringResponse: MutableLiveData<ArrayList<String>> = MutableLiveData()
 
-    fun getPost(number: Int){
+    fun getJokes(string: String){
         viewModelScope.launch {
-            val response: Response<Post> = repository.getPost(number)
+            val response: Response<PostList> = repository.getJokes(string)
             myResponse.value = response
         }
     }
 
-    val myResponses: MutableLiveData<Response<List<Post>>> = MutableLiveData()
-
-    fun getPosts(){
+    fun getRandom(){
         viewModelScope.launch {
-            val responses: Response<List<Post>> = repository.getPosts()
-            myResponses.value = responses
+            val response: Response<Post> = repository.getRandom()
+            myPostResponse.value = response
+        }
+    }
+
+    fun getCategories(){
+        viewModelScope.launch {
+            val response: Response<ArrayList<String>> = repository.getCategories()
+            myStringResponse.value = response.body()
         }
     }
 }

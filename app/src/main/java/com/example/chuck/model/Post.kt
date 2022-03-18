@@ -1,8 +1,11 @@
 package com.example.chuck.model
 
 data class Post (
-    val body: String,
-    val id: Int,
-    val title: String,
-    val userId: Int
+    val categories: List<String>,
+    val created_at: String,
+    val icon_url: String,
+    val id: String,
+    val updated_at: String,
+    val url: String,
+    val value: String
 )

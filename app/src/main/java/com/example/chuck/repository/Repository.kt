@@ -2,16 +2,20 @@ package com.example.chuck.repository
 
 import com.example.chuck.api.RetrofitInstance
 import com.example.chuck.model.Post
-import retrofit2.Call
+import com.example.chuck.model.PostList
 import retrofit2.Response
 
 class Repository {
 
-    suspend fun getPost(number: Int) : Response<Post> {
-        return RetrofitInstance.api.getPost(number)
+    suspend fun getJokes(string: String) : Response<PostList> {
+        return RetrofitInstance.api.getJokes(string)
     }
 
-    suspend fun getPosts() : Response<List<Post>> {
-        return RetrofitInstance.api.getPosts()
+    suspend fun getRandom(): Response<Post> {
+        return RetrofitInstance.api.getRandom()
+    }
+
+    suspend fun getCategories(): Response<ArrayList<String>> {
+        return RetrofitInstance.api.getCategories()
     }
 }

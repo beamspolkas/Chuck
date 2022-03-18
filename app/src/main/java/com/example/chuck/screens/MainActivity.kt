@@ -17,7 +17,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tab: TabLayout // creating object of TabLayout
     private lateinit var bar: Toolbar // creating object of ToolBar
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
