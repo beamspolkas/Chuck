@@ -3,7 +3,6 @@ package com.example.chuck.adapters
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chuck.R
 import com.example.chuck.holders.ViewHolder
@@ -22,9 +21,9 @@ class RecyclerViewAdapter(private val mList: MutableList<Post>) : RecyclerView.A
 
         val itemsViewModel = mList[position]
 
-        holder.iconUrl.text = itemsViewModel.icon_url
-        holder.id.text = itemsViewModel.id
-        holder.url.text = itemsViewModel.url
+//        holder.iconUrl.text = itemsViewModel.icon_url
+//        holder.id.text = itemsViewModel.id
+//        holder.url.text = itemsViewModel.url
         holder.value.text = itemsViewModel.value
     }
 
