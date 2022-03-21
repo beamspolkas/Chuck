@@ -21,9 +21,9 @@ class RecyclerViewAdapter(private val mList: MutableList<Post>) : RecyclerView.A
 
         val itemsViewModel = mList[position]
 
-        holder.iconUrl.text = itemsViewModel.icon_url
-        holder.id.text = itemsViewModel.id
-        holder.url.text = itemsViewModel.url
+//        holder.iconUrl.text = itemsViewModel.icon_url
+//        holder.id.text = itemsViewModel.id
+//        holder.url.text = itemsViewModel.url
         holder.value.text = itemsViewModel.value
     }
 
