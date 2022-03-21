@@ -3,7 +3,6 @@ package com.example.chuck.adapters
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chuck.R
 import com.example.chuck.holders.ViewHolder
