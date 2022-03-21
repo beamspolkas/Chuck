@@ -52,6 +52,7 @@ class CategoriesFragment : Fragment() {
             if (responses.isNotEmpty()) {
                 for (response in responses) {
                     Log.d("Response - string: ", response)
+                    //dorobić
                 }
             } else {
                 Log.d("Response - error: ", responses.toString())
