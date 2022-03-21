@@ -2,33 +2,26 @@ package com.example.chuck.adapters
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.lifecycle.Lifecycle
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.example.chuck.fragments.CategoriesFragment
+import com.example.chuck.fragments.JokeSearcherFragment
+import com.example.chuck.fragments.RandomJokeFragment
 
-class ViewPagerAdapter(supportFragmentManager: FragmentManager) :
-    FragmentStatePagerAdapter(supportFragmentManager) {
+private const val NUM_TABS = 3
 
-    //declare arrayList to contain fragments and its title
-    private val mFragmentList = ArrayList<Fragment>()
-    private val mFragmentTitleList = ArrayList<String>()
+class ViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
+    FragmentStateAdapter(fragmentManager, lifecycle) {
 
-    override fun getItem(position: Int): Fragment {
-        //return a particular fragment page
-        return mFragmentList[position]
+    override fun getItemCount(): Int {
+        return NUM_TABS
     }
 
-    override fun getCount(): Int {
-        //return the number of fragments
-        return mFragmentList.size
-    }
-
-    override fun getPageTitle(position: Int): CharSequence {
-        //return title of the page
-        return mFragmentTitleList[position]
-    }
-
-    fun addFragment(fragment: Fragment, title: String) {
-        //add each fragment and its title to the array list
-        mFragmentList.add(fragment)
-        mFragmentTitleList.add(title)
+    override fun createFragment(position: Int): Fragment {
+        when (position) {
+            0 -> return CategoriesFragment()
+            1 -> return RandomJokeFragment()
+        }
+        return JokeSearcherFragment()
     }
 }
