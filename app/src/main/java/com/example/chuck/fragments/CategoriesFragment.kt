@@ -52,11 +52,16 @@ class CategoriesFragment : Fragment() {
             if (responses.isNotEmpty()) {
                 for (response in responses) {
                     Log.d("Response - string: ", response)
-                    //dorobić
+                    //napisac adapter na stringi
                 }
             } else {
                 Log.d("Response - error: ", responses.toString())
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

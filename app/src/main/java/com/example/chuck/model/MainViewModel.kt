@@ -33,4 +33,8 @@ class MainViewModel(private val repository: Repository): ViewModel() {
             myStringResponse.value = response.body()
         }
     }
+
+    //fun getRandomJokeByCategories() {
+    //
+    //}
 }
