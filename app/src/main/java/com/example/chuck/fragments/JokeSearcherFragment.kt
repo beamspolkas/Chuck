@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.chuck.R
 import com.example.chuck.adapters.RecyclerViewAdapter
 import com.example.chuck.databinding.FragmentSearcherBinding
+import com.example.chuck.model.DialogCallback
+import com.example.chuck.model.InfoDialog
 import com.example.chuck.model.MainViewModel
 import com.example.chuck.model.MainViewModelFactory
 import com.example.chuck.repository.Repository
@@ -59,7 +61,14 @@ class JokeSearcherFragment : Fragment() {
                 Log.d("Responses: ", responses.body().toString())
                 if (responses.isSuccessful) {
                     if(responses.body()?.result?.isEmpty() == true) {
-                        //showAlertDialog()
+                        InfoDialog().build(
+                            requireContext(),
+                            "Error",
+                            "File not supported, incorrect URL",
+                            object : DialogCallback {
+                                override fun onClose() {}
+                            }
+                        )
                     } else {
                         responses.body()?.result?.let { adapter.setData(it.toMutableList()) }
                     }
@@ -69,15 +78,6 @@ class JokeSearcherFragment : Fragment() {
             }
         }
     }
-
-//    private fun showAlertDialog(){
-//        activity?.let { MaterialAlertDialogBuilder(it)
-//            .setMessage("This is a test of AlertDialog.Builder")
-//            .setPositiveButton("Ok", null)
-//            .show()
-//        }
-//        //tego nie ogarniam: https://material.io/blog/android-material-theme-type
-//    }
 
     override fun onDestroyView() {
         super.onDestroyView()
