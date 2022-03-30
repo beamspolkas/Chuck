@@ -18,4 +18,8 @@ class Repository {
     suspend fun getCategories(): Response<ArrayList<String>> {
         return RetrofitInstance.api.getCategories()
     }
+
+    suspend fun getRandomJokeByCategories(string: String) : Response<Post> {
+        return RetrofitInstance.api.getRandomJokeByCategories(string)
+    }
 }

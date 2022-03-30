@@ -34,7 +34,10 @@ class MainViewModel(private val repository: Repository): ViewModel() {
         }
     }
 
-    //fun getRandomJokeByCategories() {
-    //
-    //}
+    fun getRandomJokeByCategories(string: String){
+        viewModelScope.launch {
+            val response: Response<Post> = repository.getRandomJokeByCategories(string)
+            myPostResponse.value = response
+        }
+    }
 }

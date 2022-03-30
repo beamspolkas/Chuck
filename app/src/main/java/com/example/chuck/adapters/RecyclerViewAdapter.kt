@@ -5,26 +5,20 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chuck.R
-import com.example.chuck.holders.ViewHolder
+import com.example.chuck.holders.RecyclerViewHolder
 import com.example.chuck.model.Post
 
-class RecyclerViewAdapter(private val mList: MutableList<Post>) : RecyclerView.Adapter<ViewHolder>() {
+class RecyclerViewAdapter(private val mList: MutableList<Post>) : RecyclerView.Adapter<RecyclerViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.card_view, parent, false)
-
-        return ViewHolder(view)
+        return RecyclerViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
+    override fun onBindViewHolder(holderRecycler: RecyclerViewHolder, position: Int) {
         val itemsViewModel = mList[position]
-
-//        holder.iconUrl.text = itemsViewModel.icon_url
-//        holder.id.text = itemsViewModel.id
-//        holder.url.text = itemsViewModel.url
-        holder.value.text = itemsViewModel.value
+        holderRecycler.value.text = itemsViewModel.value
     }
 
     override fun getItemCount(): Int {

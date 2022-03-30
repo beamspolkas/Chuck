@@ -19,4 +19,8 @@ interface ApiInterface {
     @GET("categories")
     suspend fun getCategories() : Response<ArrayList<String>>
 
+    @GET("random")
+    suspend fun getRandomJokeByCategories(
+        @Query("category") string: String
+    ) : Response<Post>
 }

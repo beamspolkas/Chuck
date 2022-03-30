@@ -56,14 +56,28 @@ class JokeSearcherFragment : Fragment() {
             val myText = numberEditText?.text.toString()
             viewModel.getJokes(myText)
             viewModel.myResponse.observe(viewLifecycleOwner) { responses ->
+                Log.d("Responses: ", responses.body().toString())
                 if (responses.isSuccessful) {
-                    responses.body()?.result?.let { adapter.setData(it.toMutableList()) }
+                    if(responses.body()?.result?.isEmpty() == true) {
+                        //showAlertDialog()
+                    } else {
+                        responses.body()?.result?.let { adapter.setData(it.toMutableList()) }
+                    }
                 } else {
                     Log.d("Response - error: ", responses.errorBody().toString())
                 }
             }
         }
     }
+
+//    private fun showAlertDialog(){
+//        activity?.let { MaterialAlertDialogBuilder(it)
+//            .setMessage("This is a test of AlertDialog.Builder")
+//            .setPositiveButton("Ok", null)
+//            .show()
+//        }
+//        //tego nie ogarniam: https://material.io/blog/android-material-theme-type
+//    }
 
     override fun onDestroyView() {
         super.onDestroyView()
