@@ -1,5 +1,6 @@
 package com.example.chuck.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -51,22 +52,29 @@ class JokeSearcherFragment : Fragment() {
         setOnClickListener()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setOnClickListener(){
         val searchButton = view?.findViewById<ImageButton>(R.id.btn_search)
-        val numberEditText = view?.findViewById<TextView>(R.id.text_editText)
+        val textEditText = view?.findViewById<TextView>(R.id.text_editText)
+        val titleEditText = view?.findViewById<TextView>(R.id.dialogTitle)
+        val descEditText = view?.findViewById<TextView>(R.id.dialogDescription)
         searchButton?.setOnClickListener{
-            val myText = numberEditText?.text.toString()
+            val myText = textEditText?.text.toString()
             viewModel.getJokes(myText)
             viewModel.myResponse.observe(viewLifecycleOwner) { responses ->
                 Log.d("Responses: ", responses.body().toString())
                 if (responses.isSuccessful) {
                     if(responses.body()?.result?.isEmpty() == true) {
+                        titleEditText?.text = "Error"
+                        descEditText?.text = "File not supported, incorrect URL"
                         InfoDialog().build(
                             requireContext(),
                             "Error",
                             "File not supported, incorrect URL",
                             object : DialogCallback {
-                                override fun onClose() {}
+                                override fun onClose() {
+                                    textEditText?.text = ""
+                                }
                             }
                         )
                     } else {

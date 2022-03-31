@@ -45,6 +45,10 @@ class RandomJokeFragment : Fragment() {
         recyclerView.adapter = adapter
         viewModel = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
 
+        refreshDataFunction()
+    }
+
+    fun refreshDataFunction() {
         viewModel.getRandom()
         viewModel.myPostResponse.observe(viewLifecycleOwner) { response ->
             if (response.isSuccessful) {

@@ -17,6 +17,9 @@ class InfoDialog {
             .setCancelable(false)
             .setView(binding.root)
 
+        binding.dialogTitle.text = title
+        binding.dialogDescription.text = description
+
         binding.continueButton.setOnClickListener {
             dialog?.dismiss()
             cb.onClose()

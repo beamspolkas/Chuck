@@ -1,4 +1,3 @@
-1. String adapter - done
 2. Glide:
     - URL list
     - displaying images from url
@@ -12,16 +11,19 @@
     - Activity lifecycle, link: https://developer.android.com/guide/components/activities/activity-lifecycle
 5. Coroutine
     - link: https://developer.android.com/kotlin/coroutines
-6. AlertDialog while searching misspelled word
-    - tutorial, link: https://www.tutorialspoint.com/how-to-create-a-simple-alert-dialog-with-ok-and-cancel-buttons-using-kotlin
-    - examples: https://stackoverflow.com/questions/2115758/how-do-i-display-an-alert-dialog-on-android
-    - material alert dialog builder: https://stackoverflow.com/questions/56098162/how-to-use-materialalertdialogbuilder-fine
 7. Toast
-    - link:
-8. Changing binding to null while onDestroy
-    - link:
-9. Changing app icon
     - link:
 10. Button styling
     - link: https://developer.android.com/reference/kotlin/androidx/compose/material/package-summary#OutlinedButton(kotlin.Function0,androidx.compose.ui.Modifier,kotlin.Boolean,androidx.compose.foundation.interaction.MutableInteractionSource,androidx.compose.material.ButtonElevation,androidx.compose.ui.graphics.Shape,androidx.compose.foundation.BorderStroke,androidx.compose.material.ButtonColors,androidx.compose.foundation.layout.PaddingValues,kotlin.Function1)
     - Material Button, link: https://developer.android.com/reference/com/google/android/material/button/MaterialButton
+
+DONE:
+1. String adapter - done
+6. AlertDialog while searching misspelled word - done
+    - tutorial, link: https://www.tutorialspoint.com/how-to-create-a-simple-alert-dialog-with-ok-and-cancel-buttons-using-kotlin
+    - examples: https://stackoverflow.com/questions/2115758/how-do-i-display-an-alert-dialog-on-android
+    - material alert dialog builder: https://stackoverflow.com/questions/56098162/how-to-use-materialalertdialogbuilder-fine
+8. Changing binding to null while onDestroy - done
+9. Changing app icon - done
+    - link: https://www.youtube.com/watch?v=SDKwNh0TioE
+11. Refresh RandomJokeFragment each time it is clicked - done
