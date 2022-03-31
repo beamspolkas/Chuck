@@ -17,6 +17,7 @@
     - link: https://developer.android.com/reference/kotlin/androidx/compose/material/package-summary#OutlinedButton(kotlin.Function0,androidx.compose.ui.Modifier,kotlin.Boolean,androidx.compose.foundation.interaction.MutableInteractionSource,androidx.compose.material.ButtonElevation,androidx.compose.ui.graphics.Shape,androidx.compose.foundation.BorderStroke,androidx.compose.material.ButtonColors,androidx.compose.foundation.layout.PaddingValues,kotlin.Function1)
     - Material Button, link: https://developer.android.com/reference/com/google/android/material/button/MaterialButton
 
+
 DONE:
 1. String adapter - done
 6. AlertDialog while searching misspelled word - done
