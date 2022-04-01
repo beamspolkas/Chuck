@@ -2,9 +2,7 @@ package com.example.chuck.adapters
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chuck.R
 import com.example.chuck.holders.CategoryViewHolder
@@ -20,9 +18,9 @@ class StringAdapter(private val mList: MutableList<String>, private val onItemCl
 
     override fun onBindViewHolder(holderRecycler: CategoryViewHolder, position: Int) {
         val itemsViewModel = mList[position]
-        holderRecycler.category.text = itemsViewModel
+        holderRecycler.categories.text = itemsViewModel
         holderRecycler.itemView.setOnClickListener {
-            onItemClickListener.OnClick(itemsViewModel)
+            onItemClickListener.onClick(itemsViewModel)
         }
     }
 

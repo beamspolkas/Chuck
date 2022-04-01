@@ -56,8 +56,6 @@ class JokeSearcherFragment : Fragment() {
     private fun setOnClickListener(){
         val searchButton = view?.findViewById<ImageButton>(R.id.btn_search)
         val textEditText = view?.findViewById<TextView>(R.id.text_editText)
-        val titleEditText = view?.findViewById<TextView>(R.id.dialogTitle)
-        val descEditText = view?.findViewById<TextView>(R.id.dialogDescription)
         searchButton?.setOnClickListener{
             val myText = textEditText?.text.toString()
             viewModel.getJokes(myText)
@@ -65,8 +63,6 @@ class JokeSearcherFragment : Fragment() {
                 Log.d("Responses: ", responses.body().toString())
                 if (responses.isSuccessful) {
                     if(responses.body()?.result?.isEmpty() == true) {
-                        titleEditText?.text = "Error"
-                        descEditText?.text = "File not supported, incorrect URL"
                         InfoDialog().build(
                             requireContext(),
                             "Error",

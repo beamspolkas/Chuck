@@ -1,3 +1,4 @@
+TO DO:
 2. Glide:
     - URL list
     - displaying images from url
@@ -16,7 +17,7 @@
 10. Button styling
     - link: https://developer.android.com/reference/kotlin/androidx/compose/material/package-summary#OutlinedButton(kotlin.Function0,androidx.compose.ui.Modifier,kotlin.Boolean,androidx.compose.foundation.interaction.MutableInteractionSource,androidx.compose.material.ButtonElevation,androidx.compose.ui.graphics.Shape,androidx.compose.foundation.BorderStroke,androidx.compose.material.ButtonColors,androidx.compose.foundation.layout.PaddingValues,kotlin.Function1)
     - Material Button, link: https://developer.android.com/reference/com/google/android/material/button/MaterialButton
-
+12. onClickBackButton
 
 DONE:
 1. String adapter - done
