@@ -1,4 +1,4 @@
-package com.example.chuck.api
+package com.example.chuck.interfaces
 
 import com.example.chuck.model.Post
 import com.example.chuck.model.PostList

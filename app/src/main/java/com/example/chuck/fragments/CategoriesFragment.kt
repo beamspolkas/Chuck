@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -76,7 +77,6 @@ class CategoriesFragment : Fragment(), OnListItemClicked {
 
     override fun onResume() {
         super.onResume()
-        //Toast.makeText(requireContext(),"on Resume", Toast.LENGTH_SHORT).show()
         recyclerView.adapter = stringAdapter
     }
 //glide tutorial: https://handyopinion.com/how-to-load-multiple-images-from-url-in-android-using-glide-kotlin/
@@ -88,7 +88,6 @@ class CategoriesFragment : Fragment(), OnListItemClicked {
 
     override fun onClick(data : String) {
         viewModel.getRandomJokeByCategories(data)
-        //Toast.makeText(requireContext(), "click on item $data", Toast.LENGTH_SHORT).show()
         viewModel.myPostResponse.observe(viewLifecycleOwner) { response ->
             if (response.isSuccessful) {
                 val list = mutableListOf<Post>()
@@ -99,5 +98,6 @@ class CategoriesFragment : Fragment(), OnListItemClicked {
                 Log.d("Response - error: ", response.errorBody().toString())
             }
         }
+        Toast.makeText(requireContext(),"Random joke generated!", Toast.LENGTH_SHORT).show()
     }
 }

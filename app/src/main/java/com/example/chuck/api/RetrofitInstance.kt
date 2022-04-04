@@ -1,5 +1,6 @@
 package com.example.chuck.api
 
+import com.example.chuck.interfaces.ApiInterface
 import com.example.chuck.util.Constants.Companion.BASE_URL
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

@@ -7,11 +7,6 @@ TO DO:
 3. Use other layouts (linear, relative)
     - Linear layout, link: https://developer.android.com/guide/topics/ui/layout/linear
     - Relative layout, link: https://developer.android.com/guide/topics/ui/layout/relative
-4. Fragment/Activity life cycle
-    - Fragment lifecycle, link: https://developer.android.com/guide/fragments/lifecycle
-    - Activity lifecycle, link: https://developer.android.com/guide/components/activities/activity-lifecycle
-5. Coroutine
-    - link: https://developer.android.com/kotlin/coroutines
 7. Toast
     - link:
 10. Button styling
@@ -21,6 +16,11 @@ TO DO:
 
 DONE:
 1. String adapter - done
+4. Fragment/Activity life cycle - done
+    - Fragment lifecycle, link: https://developer.android.com/guide/fragments/lifecycle
+    - Activity lifecycle, link: https://developer.android.com/guide/components/activities/activity-lifecycle
+5. Coroutine - done
+    - link: https://developer.android.com/kotlin/coroutines
 6. AlertDialog while searching misspelled word - done
     - tutorial, link: https://www.tutorialspoint.com/how-to-create-a-simple-alert-dialog-with-ok-and-cancel-buttons-using-kotlin
     - examples: https://stackoverflow.com/questions/2115758/how-do-i-display-an-alert-dialog-on-android
