@@ -18,6 +18,7 @@ import com.example.chuck.model.MainViewModel
 import com.example.chuck.model.MainViewModelFactory
 import com.example.chuck.model.Post
 import com.example.chuck.repository.Repository
+import com.example.chuck.util.ImgUrls
 
 class RandomJokeFragment : Fragment() {
 
@@ -26,6 +27,7 @@ class RandomJokeFragment : Fragment() {
     private lateinit var adapter: RecyclerViewAdapter
     private val repository = Repository()
     private val viewModelFactory = MainViewModelFactory(repository)
+    private var imgUrls: ArrayList<String> = ArrayList()
 
     private var _binding: FragmentRandomBinding? = null
     private val binding get() = _binding!!
@@ -41,7 +43,9 @@ class RandomJokeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recyclerView = view.findViewById(R.id.recyclerViewRandom)
-        adapter = RecyclerViewAdapter(mutableListOf())
+        imgUrls.addAll(ImgUrls.list)
+        Log.d("Responses: ", imgUrls.toString())
+        adapter = RecyclerViewAdapter(mutableListOf(), requireContext(), imgUrls)
         recyclerView.layoutManager = LinearLayoutManager(requireContext(), VERTICAL, false)
         recyclerView.adapter = adapter
         viewModel = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
@@ -60,7 +64,7 @@ class RandomJokeFragment : Fragment() {
                 Log.d("Response - error: ", response.errorBody().toString())
             }
         }
-        Toast.makeText(requireContext(),"Random joke generated!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), "Random joke generated!", Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroyView() {

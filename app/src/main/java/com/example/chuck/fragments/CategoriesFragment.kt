@@ -21,7 +21,8 @@ import com.example.chuck.model.MainViewModel
 import com.example.chuck.model.MainViewModelFactory
 import com.example.chuck.model.Post
 import com.example.chuck.repository.Repository
-
+import com.example.chuck.util.ImgUrls
+import kotlinx.coroutines.*
 
 class CategoriesFragment : Fragment(), OnListItemClicked {
 
@@ -31,6 +32,7 @@ class CategoriesFragment : Fragment(), OnListItemClicked {
     private lateinit var recyclerViewAdapter: RecyclerViewAdapter
     private val repository = Repository()
     private val viewModelFactory = MainViewModelFactory(repository)
+    private var imgUrls: ArrayList<String> = ArrayList()
 
     private var _binding: FragmentCategoriesBinding? = null
     private val binding get() = _binding!!
@@ -56,7 +58,8 @@ class CategoriesFragment : Fragment(), OnListItemClicked {
         super.onViewCreated(view, savedInstanceState)
         recyclerView = view.findViewById(R.id.recyclerViewCategories)
         stringAdapter = StringAdapter(mutableListOf(),this)
-        recyclerViewAdapter = RecyclerViewAdapter(mutableListOf())
+        imgUrls.addAll(ImgUrls.list)
+        recyclerViewAdapter = RecyclerViewAdapter(mutableListOf(), requireContext(), imgUrls)
         recyclerView.layoutManager = LinearLayoutManager(requireContext(), VERTICAL, false)
         recyclerView.adapter = stringAdapter
 
@@ -76,8 +79,11 @@ class CategoriesFragment : Fragment(), OnListItemClicked {
     }
 
     override fun onResume() {
-        super.onResume()
-        recyclerView.adapter = stringAdapter
+        runBlocking {//to nic nie zmieniło w płynności
+            delay(1500)
+            super.onResume()
+            recyclerView.adapter = stringAdapter
+        }
     }
 //glide tutorial: https://handyopinion.com/how-to-load-multiple-images-from-url-in-android-using-glide-kotlin/
 
@@ -98,6 +104,6 @@ class CategoriesFragment : Fragment(), OnListItemClicked {
                 Log.d("Response - error: ", response.errorBody().toString())
             }
         }
-        Toast.makeText(requireContext(),"Random joke generated!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), "Random joke generated!", Toast.LENGTH_SHORT).show()
     }
 }

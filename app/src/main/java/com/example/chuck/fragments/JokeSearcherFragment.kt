@@ -21,6 +21,8 @@ import com.example.chuck.model.InfoDialog
 import com.example.chuck.model.MainViewModel
 import com.example.chuck.model.MainViewModelFactory
 import com.example.chuck.repository.Repository
+import com.example.chuck.util.ImgUrls
+
 
 class JokeSearcherFragment : Fragment() {
 
@@ -29,9 +31,11 @@ class JokeSearcherFragment : Fragment() {
     private lateinit var adapter: RecyclerViewAdapter
     private val repository = Repository()
     private val viewModelFactory = MainViewModelFactory(repository)
+    private var imgUrls: ArrayList<String> = ArrayList()
 
     private var _binding: FragmentSearcherBinding? = null
     private val binding get() = _binding!!
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,7 +48,9 @@ class JokeSearcherFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recyclerView = view.findViewById(R.id.recyclerViewSearcher)
-        adapter = RecyclerViewAdapter(mutableListOf())
+        imgUrls.addAll(ImgUrls.list)
+        Log.d("Responses: ", imgUrls.toString())
+        adapter = RecyclerViewAdapter(mutableListOf(), requireContext(), imgUrls)
         recyclerView.layoutManager = LinearLayoutManager(requireContext(), VERTICAL, false)
         recyclerView.adapter = adapter
         viewModel = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
