@@ -58,7 +58,7 @@ class CategoriesFragment : Fragment(), OnListItemClicked {
         super.onViewCreated(view, savedInstanceState)
         recyclerView = view.findViewById(R.id.recyclerViewCategories)
         stringAdapter = StringAdapter(mutableListOf(),this)
-        imgUrls.addAll(ImgUrls.list)
+        imgUrls.addAll(ImgUrls.urlList)
         recyclerViewAdapter = RecyclerViewAdapter(mutableListOf(), requireContext(), imgUrls)
         recyclerView.layoutManager = LinearLayoutManager(requireContext(), VERTICAL, false)
         recyclerView.adapter = stringAdapter

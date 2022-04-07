@@ -43,7 +43,7 @@ class RandomJokeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recyclerView = view.findViewById(R.id.recyclerViewRandom)
-        imgUrls.addAll(ImgUrls.list)
+        imgUrls.addAll(ImgUrls.urlList)
         Log.d("Responses: ", imgUrls.toString())
         adapter = RecyclerViewAdapter(mutableListOf(), requireContext(), imgUrls)
         recyclerView.layoutManager = LinearLayoutManager(requireContext(), VERTICAL, false)

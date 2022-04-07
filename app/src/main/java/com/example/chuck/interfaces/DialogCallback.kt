@@ -1,4 +1,4 @@
-package com.example.chuck.model
+package com.example.chuck.interfaces
 
 interface DialogCallback {
     fun onClose()

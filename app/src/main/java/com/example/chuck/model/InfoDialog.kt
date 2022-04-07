@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
 import com.example.chuck.databinding.DialogInfoBinding
+import com.example.chuck.interfaces.DialogCallback
 
 class InfoDialog {
 

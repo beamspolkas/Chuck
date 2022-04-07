@@ -31,7 +31,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:tag="image_tag"
-                app:srcCompat="@drawable/chuck_norris_button"
+
                 tools:ignore="ContentDescription,ImageContrastCheck" />
 
             <RelativeLayout

@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.chuck.R
 import com.example.chuck.adapters.RecyclerViewAdapter
 import com.example.chuck.databinding.FragmentSearcherBinding
-import com.example.chuck.model.DialogCallback
+import com.example.chuck.interfaces.DialogCallback
 import com.example.chuck.model.InfoDialog
 import com.example.chuck.model.MainViewModel
 import com.example.chuck.model.MainViewModelFactory
@@ -48,7 +48,7 @@ class JokeSearcherFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recyclerView = view.findViewById(R.id.recyclerViewSearcher)
-        imgUrls.addAll(ImgUrls.list)
+        imgUrls.addAll(ImgUrls.urlList)
         Log.d("Responses: ", imgUrls.toString())
         adapter = RecyclerViewAdapter(mutableListOf(), requireContext(), imgUrls)
         recyclerView.layoutManager = LinearLayoutManager(requireContext(), VERTICAL, false)
