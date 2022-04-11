@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,6 +18,7 @@ import com.example.chuck.model.MainViewModelFactory
 import com.example.chuck.model.Post
 import com.example.chuck.repository.Repository
 import com.example.chuck.util.ImgUrls
+import com.example.chuck.util.WhichImage
 
 class RandomJokeFragment : Fragment() {
 
@@ -44,8 +44,7 @@ class RandomJokeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         recyclerView = view.findViewById(R.id.recyclerViewRandom)
         imgUrls.addAll(ImgUrls.urlList)
-        Log.d("Responses: ", imgUrls.toString())
-        adapter = RecyclerViewAdapter(mutableListOf(), requireContext(), imgUrls)
+        adapter = RecyclerViewAdapter(mutableListOf(), requireContext(), imgUrls, WhichImage.RANDOM)
         recyclerView.layoutManager = LinearLayoutManager(requireContext(), VERTICAL, false)
         recyclerView.adapter = adapter
         viewModel = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
@@ -64,7 +63,6 @@ class RandomJokeFragment : Fragment() {
                 Log.d("Response - error: ", response.errorBody().toString())
             }
         }
-        Toast.makeText(requireContext(), "Random joke generated!", Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroyView() {

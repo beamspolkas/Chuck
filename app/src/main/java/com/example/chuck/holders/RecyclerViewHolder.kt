@@ -10,7 +10,4 @@ class RecyclerViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val id: TextView = view.findViewById(R.id.id)
     val value: TextView = view.findViewById(R.id.value)
     val image: ImageView = view.findViewById(R.id.imageView)
-    //val category: TextView = view.findViewById(R.id.category)
-    //val iconUrl: TextView = view.findViewById(R.id.icon_url)
-    //val url: TextView = view.findViewById(R.id.url)
 }

@@ -24,6 +24,7 @@ import com.example.chuck.model.MainViewModelFactory
 import com.example.chuck.model.Post
 import com.example.chuck.repository.Repository
 import com.example.chuck.util.ImgUrls
+import com.example.chuck.util.WhichImage
 import kotlinx.coroutines.*
 import org.greenrobot.eventbus.Subscribe
 
@@ -64,7 +65,7 @@ class CategoriesFragment : Fragment(), OnListItemClicked {
         recyclerView = view.findViewById(R.id.recyclerViewCategories)
         stringAdapter = StringAdapter(mutableListOf(),this)
         imgUrls.addAll(ImgUrls.urlList)
-        recyclerViewAdapter = RecyclerViewAdapter(mutableListOf(), requireContext(), imgUrls)
+        recyclerViewAdapter = RecyclerViewAdapter(mutableListOf(), requireContext(), imgUrls, WhichImage.CATEGORY)
         recyclerView.layoutManager = LinearLayoutManager(requireContext(), VERTICAL, false)
         recyclerView.adapter = stringAdapter
 
@@ -120,6 +121,5 @@ class CategoriesFragment : Fragment(), OnListItemClicked {
                 Log.d("Response - error: ", response.errorBody().toString())
             }
         }
-        Toast.makeText(requireContext(), "Random joke generated!", Toast.LENGTH_SHORT).show()
     }
 }

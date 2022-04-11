@@ -24,6 +24,7 @@ import com.example.chuck.model.MainViewModel
 import com.example.chuck.model.MainViewModelFactory
 import com.example.chuck.repository.Repository
 import com.example.chuck.util.ImgUrls
+import com.example.chuck.util.WhichImage
 
 class JokeSearcherFragment : Fragment() {
 
@@ -50,7 +51,7 @@ class JokeSearcherFragment : Fragment() {
         recyclerView = view.findViewById(R.id.recyclerViewSearcher)
         imgUrls.addAll(ImgUrls.urlList)
         Log.d("Responses: ", imgUrls.toString())
-        adapter = RecyclerViewAdapter(mutableListOf(), requireContext(), imgUrls)
+        adapter = RecyclerViewAdapter(mutableListOf(), requireContext(), imgUrls, WhichImage.RANDOM)
         recyclerView.layoutManager = LinearLayoutManager(requireContext(), VERTICAL, false)
         recyclerView.adapter = adapter
         viewModel = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]

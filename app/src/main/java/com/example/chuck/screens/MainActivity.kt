@@ -9,10 +9,12 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.chuck.R
 import com.example.chuck.adapters.ViewPagerAdapter
 import com.example.chuck.databinding.ActivityMainBinding
+import com.example.chuck.events.Events
 import com.example.chuck.events.GlobalBus.bus
 import com.example.chuck.fragments.RandomJokeFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import org.greenrobot.eventbus.Subscribe
 
 
 val tabsArray = arrayOf(
@@ -68,7 +70,6 @@ class MainActivity : AppCompatActivity() {
 
         save.setOnClickListener {
             Toast.makeText(this, "Save button clicked", Toast.LENGTH_SHORT).show()
-
         }
 
         send.setOnClickListener {
@@ -110,6 +111,16 @@ class MainActivity : AppCompatActivity() {
             binding.fab.startAnimation(rotateClose)
         }
     }
+
+    @Subscribe
+    fun getMessage(fragmentActivityMessage: Events.FragmentActivityMessage) {
+        Toast.makeText(
+            applicationContext,
+            getString(R.string.message_main_activity) + " " + fragmentActivityMessage.message,
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+
 
     override fun onStop() {
         super.onStop()
