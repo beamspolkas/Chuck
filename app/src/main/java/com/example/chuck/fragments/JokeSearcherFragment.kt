@@ -2,10 +2,12 @@ package com.example.chuck.fragments
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -23,7 +25,6 @@ import com.example.chuck.model.MainViewModelFactory
 import com.example.chuck.repository.Repository
 import com.example.chuck.util.ImgUrls
 
-
 class JokeSearcherFragment : Fragment() {
 
     private lateinit var viewModel: MainViewModel
@@ -35,7 +36,6 @@ class JokeSearcherFragment : Fragment() {
 
     private var _binding: FragmentSearcherBinding? = null
     private val binding get() = _binding!!
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -72,7 +72,7 @@ class JokeSearcherFragment : Fragment() {
                         InfoDialog().build(
                             requireContext(),
                             "Error",
-                            "File not supported, incorrect URL",
+                            "Wrong word",
                             object : DialogCallback {
                                 override fun onClose() {
                                     textEditText?.text = ""

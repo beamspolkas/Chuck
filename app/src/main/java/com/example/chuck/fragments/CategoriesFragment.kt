@@ -16,6 +16,8 @@ import com.example.chuck.R
 import com.example.chuck.adapters.RecyclerViewAdapter
 import com.example.chuck.adapters.StringAdapter
 import com.example.chuck.databinding.FragmentCategoriesBinding
+import com.example.chuck.events.Events
+import com.example.chuck.events.GlobalBus.bus
 import com.example.chuck.interfaces.OnListItemClicked
 import com.example.chuck.model.MainViewModel
 import com.example.chuck.model.MainViewModelFactory
@@ -23,6 +25,8 @@ import com.example.chuck.model.Post
 import com.example.chuck.repository.Repository
 import com.example.chuck.util.ImgUrls
 import kotlinx.coroutines.*
+import org.greenrobot.eventbus.Subscribe
+
 
 class CategoriesFragment : Fragment(), OnListItemClicked {
 
@@ -51,6 +55,7 @@ class CategoriesFragment : Fragment(), OnListItemClicked {
             }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
+        bus?.register(this)
         return binding.root
     }
 
@@ -79,16 +84,22 @@ class CategoriesFragment : Fragment(), OnListItemClicked {
     }
 
     override fun onResume() {
-        runBlocking {//to nic nie zmieniło w płynności
-            delay(1500)
-            super.onResume()
-            recyclerView.adapter = stringAdapter
-        }
+        super.onResume()
+        recyclerView.adapter = stringAdapter
     }
-//glide tutorial: https://handyopinion.com/how-to-load-multiple-images-from-url-in-android-using-glide-kotlin/
+
+    @Subscribe
+    fun getMessage(activityFragmentMessage: Events.FragmentActivityMessage) {
+        Toast.makeText(
+            activity,
+            getString(R.string.message_fragment) +
+                    " " + activityFragmentMessage.message,
+            Toast.LENGTH_SHORT).show()
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        bus?.unregister(this)
         _binding = null
     }
 
@@ -96,10 +107,15 @@ class CategoriesFragment : Fragment(), OnListItemClicked {
         viewModel.getRandomJokeByCategories(data)
         viewModel.myPostResponse.observe(viewLifecycleOwner) { response ->
             if (response.isSuccessful) {
-                val list = mutableListOf<Post>()
-                response.body()?.let { list.add(it) }
-                recyclerViewAdapter.setData(list)
-                recyclerView.adapter = recyclerViewAdapter
+                runBlocking {//lepiej się wczytuje ale są zwiechy
+                    delay(300)
+                    val list = mutableListOf<Post>()
+                    response.body()?.let { list.add(it) }
+                    val fragmentActivityMessageEvent = Events.FragmentActivityMessage(list[0].value)
+                    bus?.post(getMessage(fragmentActivityMessageEvent))
+                    recyclerViewAdapter.setData(list)
+                    recyclerView.adapter = recyclerViewAdapter
+                }
             } else {
                 Log.d("Response - error: ", response.errorBody().toString())
             }
