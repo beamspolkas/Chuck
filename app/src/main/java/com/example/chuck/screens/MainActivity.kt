@@ -1,6 +1,8 @@
 package com.example.chuck.screens
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -9,13 +11,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.chuck.R
 import com.example.chuck.adapters.ViewPagerAdapter
 import com.example.chuck.databinding.ActivityMainBinding
-import com.example.chuck.events.Events
-import com.example.chuck.events.GlobalBus.bus
 import com.example.chuck.fragments.RandomJokeFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import org.greenrobot.eventbus.Subscribe
-
 
 val tabsArray = arrayOf(
     "Categories",
@@ -32,17 +30,29 @@ class MainActivity : AppCompatActivity() {
     private val toBottom: Animation by lazy { AnimationUtils.loadAnimation(this, R.anim.to_bottom)}
 
     private var clicked = false
+    private val isChecked = false
 
-    override fun onStart() {
-        super.onStart()
-        bus?.register(this)
+//    override fun onStart() {
+//        super.onStart()
+//        bus?.register(this)
+//    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.overflow_menu, menu)
+        val item: MenuItem = menu.findItem(R.id.switch_btn)
+        item.setActionView(R.layout.menu_switch)
+        return true
     }
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        setSupportActionBar(binding.toolbar)
 
         val viewPager = binding.viewPager
         val tabLayout = binding.tabLayout
@@ -69,11 +79,19 @@ class MainActivity : AppCompatActivity() {
         }
 
         save.setOnClickListener {
-            Toast.makeText(this, "Save button clicked", Toast.LENGTH_SHORT).show()
+            Toast
+                .makeText(this,
+                    "Save button clicked",
+                    Toast.LENGTH_SHORT)
+                .show()
         }
 
         send.setOnClickListener {
-            Toast.makeText(this, "Send button clicked", Toast.LENGTH_SHORT).show()
+            Toast
+                .makeText(this,
+                    "Send button clicked",
+                    Toast.LENGTH_SHORT)
+                .show()
         }
 
         val adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
@@ -112,18 +130,18 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    @Subscribe
-    fun getMessage(fragmentActivityMessage: Events.FragmentActivityMessage) {
-        Toast.makeText(
-            applicationContext,
-            getString(R.string.message_main_activity) + " " + fragmentActivityMessage.message,
-            Toast.LENGTH_SHORT
-        ).show()
-    }
 
+//    @Subscribe
+//    fun getMessage(fragmentActivityMessage: Events.FragmentActivityMessage) {
+//        Toast.makeText(
+//            applicationContext,
+//            getString(R.string.message_main_activity) + " " + fragmentActivityMessage.message,
+//            Toast.LENGTH_SHORT
+//        ).show()
+//    }
 
-    override fun onStop() {
-        super.onStop()
-        bus?.unregister(this)
-    }
+//    override fun onStop() {
+//        super.onStop()
+//        bus?.unregister(this)
+//    }
 }

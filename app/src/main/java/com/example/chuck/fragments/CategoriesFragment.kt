@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -26,8 +25,6 @@ import com.example.chuck.repository.Repository
 import com.example.chuck.util.ImgUrls
 import com.example.chuck.util.WhichImage
 import kotlinx.coroutines.*
-import org.greenrobot.eventbus.Subscribe
-
 
 class CategoriesFragment : Fragment(), OnListItemClicked {
 
@@ -56,7 +53,7 @@ class CategoriesFragment : Fragment(), OnListItemClicked {
             }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
-        bus?.register(this)
+        //bus?.register(this)
         return binding.root
     }
 
@@ -89,18 +86,9 @@ class CategoriesFragment : Fragment(), OnListItemClicked {
         recyclerView.adapter = stringAdapter
     }
 
-    @Subscribe
-    fun getMessage(activityFragmentMessage: Events.FragmentActivityMessage) {
-        Toast.makeText(
-            activity,
-            getString(R.string.message_fragment) +
-                    " " + activityFragmentMessage.message,
-            Toast.LENGTH_SHORT).show()
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
-        bus?.unregister(this)
+        //bus?.unregister(this)
         _binding = null
     }
 
@@ -112,8 +100,6 @@ class CategoriesFragment : Fragment(), OnListItemClicked {
                     delay(300)
                     val list = mutableListOf<Post>()
                     response.body()?.let { list.add(it) }
-                    val fragmentActivityMessageEvent = Events.FragmentActivityMessage(list[0].value)
-                    bus?.post(getMessage(fragmentActivityMessageEvent))
                     recyclerViewAdapter.setData(list)
                     recyclerView.adapter = recyclerViewAdapter
                 }

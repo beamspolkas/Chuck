@@ -16,4 +16,5 @@
     <string name="send_message_fragment">Send message to Fragment</string>
     <string name="send_message_activity">Send message to Activity</string>
     <string name="show_second_activity">Show Second Activity</string>
+    <string name="day_night">Day/Night</string>
 </resources>
