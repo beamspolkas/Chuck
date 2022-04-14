@@ -8,12 +8,16 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.example.chuck.R
 import com.example.chuck.adapters.ViewPagerAdapter
 import com.example.chuck.databinding.ActivityMainBinding
+import com.example.chuck.events.Events
+import com.example.chuck.events.GlobalBus.bus
 import com.example.chuck.fragments.RandomJokeFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import org.greenrobot.eventbus.Subscribe
 
 val tabsArray = arrayOf(
     "Categories",
@@ -30,22 +34,38 @@ class MainActivity : AppCompatActivity() {
     private val toBottom: Animation by lazy { AnimationUtils.loadAnimation(this, R.anim.to_bottom)}
 
     private var clicked = false
-    private val isChecked = false
 
-//    override fun onStart() {
-//        super.onStart()
-//        bus?.register(this)
-//    }
+    override fun onStart() {
+        super.onStart()
+        bus?.register(this)
+    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.overflow_menu, menu)
-        val item: MenuItem = menu.findItem(R.id.switch_btn)
-        item.setActionView(R.layout.menu_switch)
+        //val item: MenuItem = menu.findItem(R.id.switch_btn)
+        //item.setActionView(R.layout.menu_switch)
+
         return true
     }
 
-
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_day -> {
+                AppCompatDelegate.setDefaultNightMode(
+                    AppCompatDelegate.MODE_NIGHT_NO
+                )
+                true
+            }
+            R.id.menu_night -> {
+                AppCompatDelegate.setDefaultNightMode(
+                    AppCompatDelegate.MODE_NIGHT_YES
+                )
+                delegate.localNightMode
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -129,19 +149,18 @@ class MainActivity : AppCompatActivity() {
             binding.fab.startAnimation(rotateClose)
         }
     }
+    //działa
+    @Subscribe
+    fun getMessage(fragmentActivityMessage: Events.FragmentToActivityMessage) {
+        Toast.makeText(
+            applicationContext,
+            getString(R.string.message_main_activity) + " " + fragmentActivityMessage.message,
+            Toast.LENGTH_SHORT
+        ).show()
+    }
 
-
-//    @Subscribe
-//    fun getMessage(fragmentActivityMessage: Events.FragmentActivityMessage) {
-//        Toast.makeText(
-//            applicationContext,
-//            getString(R.string.message_main_activity) + " " + fragmentActivityMessage.message,
-//            Toast.LENGTH_SHORT
-//        ).show()
-//    }
-
-//    override fun onStop() {
-//        super.onStop()
-//        bus?.unregister(this)
-//    }
+    override fun onStop() {
+        super.onStop()
+        bus?.unregister(this)
+    }
 }

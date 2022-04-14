@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+<!--    <item-->
+<!--        android:id="@+id/switch_btn"-->
+<!--        android:title="@string/day_night"-->
+<!--        app:actionLayout="@layout/menu_switch"-->
+<!--        android:checkable="true"-->
+<!--        app:showAsAction="always" />-->
+
     <item
-        android:id="@+id/switch_btn"
-        android:title="@string/day_night"
-        app:actionLayout="@layout/menu_switch"
-        android:checkable="true"
-        app:showAsAction="always" />
+        android:id="@+id/menu_day"
+        android:orderInCategory="1"
+        app:showAsAction="never"
+        android:title="@string/day" />
+    <item
+        android:id="@+id/menu_night"
+        android:orderInCategory="2"
+        app:showAsAction="never"
+        android:title="@string/night"/>
+
 </menu>

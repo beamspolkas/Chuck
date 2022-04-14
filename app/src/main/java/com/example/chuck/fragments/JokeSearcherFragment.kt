@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,6 +19,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.chuck.R
 import com.example.chuck.adapters.RecyclerViewAdapter
 import com.example.chuck.databinding.FragmentSearcherBinding
+import com.example.chuck.events.Events
+import com.example.chuck.events.GlobalBus.bus
 import com.example.chuck.interfaces.DialogCallback
 import com.example.chuck.model.InfoDialog
 import com.example.chuck.model.MainViewModel
@@ -25,6 +28,7 @@ import com.example.chuck.model.MainViewModelFactory
 import com.example.chuck.repository.Repository
 import com.example.chuck.util.ImgUrls
 import com.example.chuck.util.WhichImage
+import org.greenrobot.eventbus.Subscribe
 
 class JokeSearcherFragment : Fragment() {
 
@@ -43,6 +47,7 @@ class JokeSearcherFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSearcherBinding.inflate(inflater, container, false)
+        bus?.register(this)
         return binding.root
     }
 
@@ -81,7 +86,14 @@ class JokeSearcherFragment : Fragment() {
                             }
                         )
                     } else {
-                        responses.body()?.result?.let { adapter.setData(it.toMutableList()) }
+                        responses.body()?.result?.let {
+                                adapter.setData(it.toMutableList())
+                        }
+//                        for (response in responses.body()?.result!!) {
+//                            val fragmentActivityMessageEvent: Events.FragmentToActivityMessage =
+//                                Events.FragmentToActivityMessage(response.value)
+//                            bus?.post(fragmentActivityMessageEvent)
+//                        }
                     }
                 } else {
                     Log.d("Response - error: ", responses.errorBody().toString())
@@ -90,8 +102,19 @@ class JokeSearcherFragment : Fragment() {
         }
     }
 
+    @Subscribe
+    fun getMessage(activityFragmentMessage: Events.ActivityToFragmentMessage) {
+        Toast.makeText(
+            activity,
+            getString(R.string.message_fragment) +
+                    " " + activityFragmentMessage.message,
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
+        bus?.unregister(this)
         _binding = null
     }
 }
