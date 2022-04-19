@@ -6,7 +6,4 @@ class Events {
 
     // Event used to send message from activity to fragment.
     class ActivityToFragmentMessage(val message: String)
-
-    // Event used to send message from activity to activity.
-    class ActivityActivityMessage(val message: String)
 }
