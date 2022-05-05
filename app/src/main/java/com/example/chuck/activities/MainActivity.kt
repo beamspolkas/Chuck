@@ -1,18 +1,20 @@
-package com.example.chuck.screens
+package com.example.chuck.activities
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.content.Intent
 import android.os.Bundle
 import android.telephony.SmsManager
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.app.ActivityCompat
 import com.example.chuck.R
 import com.example.chuck.adapters.ViewPagerAdapter
 import com.example.chuck.databinding.ActivityMainBinding
@@ -22,14 +24,16 @@ import com.example.chuck.fragments.RandomJokeFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import org.greenrobot.eventbus.Subscribe
-import java.io.*
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 
 
 val tabsArray = arrayOf(
     "Categories",
     "Random Joke",
-    "Joke Search"
-)
+    "Favs",
+    "Joke Search")
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -54,6 +58,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        var frag: Fragment? = null
         return when (item.itemId) {
             R.id.menu_day -> {
                 AppCompatDelegate.setDefaultNightMode(
@@ -68,6 +73,17 @@ class MainActivity : AppCompatActivity() {
                 delegate.localNightMode
                 true
             }
+//            R.id.favs -> {
+//                val fragmentDemo : Fragment = FavouritesFragment()
+//                Log.d("Fragment class: ", fragmentDemo.javaClass.name)
+//                val fragmentManager : FragmentManager = this.supportFragmentManager
+//                val transaction : FragmentTransaction = fragmentManager.beginTransaction()
+//                transaction.replace(R.id.fragmentLayout, fragmentDemo)//nie robi replace tylko add, moze container?
+//                transaction.addToBackStack(null)
+//                // Commit the transaction
+//                transaction.commit()
+//                true
+//            }
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -76,8 +92,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
+        val toolbar = binding.toolbar
         setContentView(view)
-        setSupportActionBar(binding.toolbar)
+        setSupportActionBar(toolbar)
 
         val viewPager = binding.viewPager
         val tabLayout = binding.tabLayout
@@ -99,39 +116,32 @@ class MainActivity : AppCompatActivity() {
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
 
-        fab.setOnClickListener{
-            onFabButtonClicked()
-        }
-
-        save.setOnClickListener {
-            Toast
-                .makeText(this,
-                    "Save button clicked",
-                    Toast.LENGTH_SHORT)
-                .show()
-            saveMessage()
-        }
-
-        send.setOnClickListener {
-            Toast
-                .makeText(this,
-                    "Send button clicked",
-                    Toast.LENGTH_SHORT)
-                .show()
-            sendSMS("+48663851713",smsText)
-        }
-
         val adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
         viewPager.adapter = adapter
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = tabsArray[position]
         }.attach()
+
+        fab.setOnClickListener{
+            onFabButtonClicked()
+        }
+
+        save.setOnClickListener {
+//            Toast.makeText(this, "Save button clicked", Toast.LENGTH_SHORT).show()
+            saveMessage()
+        }
+
+        send.setOnClickListener {
+//            Toast.makeText(this, "Send button clicked", Toast.LENGTH_SHORT).show()
+            sendSMS("+48663851713",smsText)
+        }
     }
 
     @SuppressLint("UnspecifiedImmutableFlag")
     @Suppress("SameParameterValue", "DEPRECATION")
     private fun sendSMS(phoneNumber: String, message: String) {
+        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.SEND_SMS),1)
         val sentPI: PendingIntent = PendingIntent.getBroadcast(this, 0, Intent("SMS_SENT"), 0)
         SmsManager.getDefault().sendTextMessage(phoneNumber, null, message, sentPI, null)
     }
@@ -139,58 +149,51 @@ class MainActivity : AppCompatActivity() {
     private fun saveMessage(){
         val file = File(filesDir, this.filename)
         var fos: FileOutputStream? = null
-
         try {
             fos = FileOutputStream(file)
             fos.write(this.smsText.toByteArray())
         } catch (e: Exception) {
             e.printStackTrace()
-            Toast.makeText(this, "Failed: " + e.message, Toast.LENGTH_LONG).show()
+            //Toast.makeText(this, "Failed: " + e.message, Toast.LENGTH_LONG).show()
         } finally {
             if (fos != null) {
-                try {
-                    Toast.makeText(
-                        this,
-                        "Write to $filename successfully!",
-                        Toast.LENGTH_LONG
-                    ).show()
+                try { //Toast.makeText(this,"Write to $filename successfully!",Toast.LENGTH_LONG).show()
                     fos.close()
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }
             } else {
-                Toast.makeText(this, "Failed to write!", Toast.LENGTH_LONG).show()
+                //Toast.makeText(this, "Failed to write!", Toast.LENGTH_LONG).show()
             }
-        }
-        readInternalDemo()
+        } //readInternalDemo()
     }
 
-    private fun readInternalDemo() {
-        val file = File(filesDir, this.filename)
-        if (!file.exists()) {
-            Toast.makeText(this, "Failed: file does not exist", Toast.LENGTH_LONG).show()
-            return
-        }
-        var fis: FileInputStream? = null
-        var textContent = ""
-        try {
-            fis = FileInputStream(file)
-            val br = BufferedReader(InputStreamReader(fis))
-            textContent = br.readLine()
-        } catch (e: java.lang.Exception) {
-            Toast.makeText(this, "Failed: " + e.message, Toast.LENGTH_LONG).show()
-        } finally {
-            if (fis != null) {
-                Toast.makeText(this, "Read Successfully: $textContent", Toast.LENGTH_LONG).show()
-                try {
-                    fis.close()
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                    Toast.makeText(this, "Failed to read!", Toast.LENGTH_LONG).show()
-                }
-            }
-        }
-    }
+//    private fun readInternalDemo() {
+//        val file = File(filesDir, this.filename)
+//        if (!file.exists()) {
+//            Toast.makeText(this, "Failed: file does not exist", Toast.LENGTH_LONG).show()
+//            return
+//        }
+//        var fis: FileInputStream? = null
+//        var textContent = ""
+//        try {
+//            fis = FileInputStream(file)
+//            val br = BufferedReader(InputStreamReader(fis))
+//            textContent = br.readLine()
+//        } catch (e: java.lang.Exception) {
+//            Toast.makeText(this, "Failed: " + e.message, Toast.LENGTH_LONG).show()
+//        } finally {
+//            if (fis != null) {
+//                Toast.makeText(this, "Read Successfully: $textContent", Toast.LENGTH_LONG).show()
+//                try {
+//                    fis.close()
+//                } catch (e: IOException) {
+//                    e.printStackTrace()
+//                    Toast.makeText(this, "Failed to read!", Toast.LENGTH_LONG).show()
+//                }
+//            }
+//        }
+//    }
 
     private fun onFabButtonClicked() {
         setVisibility(clicked)
@@ -219,14 +222,11 @@ class MainActivity : AppCompatActivity() {
             binding.fab.startAnimation(rotateClose)
         }
     }
+
     //działa, jak wrzucić to w sendSMS
     @Subscribe
     fun getMessage(fragmentActivityMessage: Events.FragmentToActivityMessage) {
-        Toast.makeText(
-            applicationContext,
-            getString(R.string.message_main_activity) + " " + fragmentActivityMessage.message,
-            Toast.LENGTH_SHORT
-        ).show()
+//        Toast.makeText(applicationContext,getString(R.string.message_main_activity) + " " + fragmentActivityMessage.message,Toast.LENGTH_SHORT).show()
         smsText = fragmentActivityMessage.message
     }
 

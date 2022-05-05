@@ -1,5 +1,6 @@
 package com.example.chuck.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -98,7 +99,7 @@ class CategoriesFragment : Fragment(), OnListItemClicked {
         viewModel.getRandomJokeByCategories(data)
         viewModel.myPostResponse.observe(viewLifecycleOwner) { response ->
             if (response.isSuccessful) {
-                runBlocking {//lepiej się wczytuje ale są zwiechy
+                runBlocking {
                     delay(300)
                     val list = mutableListOf<Post>()
                     response.body()?.let { list.add(it) }
@@ -109,6 +110,8 @@ class CategoriesFragment : Fragment(), OnListItemClicked {
 
                     recyclerViewAdapter.setData(list)
                     recyclerView.adapter = recyclerViewAdapter
+
+                    saveData(list)
                 }
             } else {
                 Log.d("Response - error: ", response.errorBody().toString())
@@ -116,13 +119,25 @@ class CategoriesFragment : Fragment(), OnListItemClicked {
         }
     }
 
+    private fun saveData(list: MutableList<Post>) {
+        val insertedText = list[0].id
+        val sharedPreferences = context?.getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences?.edit()
+        editor?.apply {
+            putString("STRING_KEY", insertedText)
+            putBoolean("BOOLEAN_KEY", true)
+        }?.apply()
+
+        Toast.makeText(context,"Data saved", Toast.LENGTH_SHORT).show()
+    }
+
     @Subscribe
     fun getMessage(activityFragmentMessage: Events.ActivityToFragmentMessage) {
-        Toast.makeText(
-            activity,
-            getString(R.string.message_fragment) +
-                    " " + activityFragmentMessage.message,
-            Toast.LENGTH_SHORT
-        ).show()
+//        Toast.makeText(
+//            activity,
+//            getString(R.string.message_fragment) +
+//                    " " + activityFragmentMessage.message,
+//            Toast.LENGTH_SHORT
+//        ).show()
     }
 }

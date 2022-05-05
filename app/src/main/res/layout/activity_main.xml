@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".screens.MainActivity">
+    android:id="@+id/MainLayout"
+    tools:context=".activities.MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -58,7 +59,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_input_add"
-        tools:ignore="ImageContrastCheck,SpeakableTextPresentCheck,DuplicateSpeakableTextCheck" />
+        tools:ignore="ContentDescription,DuplicateSpeakableTextCheck,HardcodedText,ImageContrastCheck,SpeakableTextPresentCheck" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/save_btn"
@@ -71,7 +72,7 @@
         app:layout_constraintBottom_toTopOf="@+id/fab"
         app:layout_constraintEnd_toEndOf="@+id/fab"
         app:srcCompat="@android:drawable/ic_menu_save"
-        tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck"
+        tools:ignore="ContentDescription,HardcodedText,ImageContrastCheck,SpeakableTextPresentCheck"
         android:contentDescription="TODO"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -85,7 +86,7 @@
         app:layout_constraintBottom_toTopOf="@+id/save_btn"
         app:layout_constraintEnd_toEndOf="@+id/save_btn"
         app:srcCompat="@android:drawable/sym_action_email"
-        tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck"
+        tools:ignore="ContentDescription,HardcodedText,ImageContrastCheck,SpeakableTextPresentCheck"
         android:contentDescription="TODO"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

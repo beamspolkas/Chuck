@@ -75,12 +75,12 @@ class RandomJokeFragment : Fragment() {
 
     @Subscribe
     fun getMessage(activityFragmentMessage: Events.ActivityToFragmentMessage) {
-        Toast.makeText(
-            activity,
-            getString(R.string.message_fragment) +
-                    " " + activityFragmentMessage.message,
-            Toast.LENGTH_SHORT
-        ).show()
+//        Toast.makeText(
+//            activity,
+//            getString(R.string.message_fragment) +
+//                    " " + activityFragmentMessage.message,
+//            Toast.LENGTH_SHORT
+//        ).show()
     }
 
     override fun onDestroyView() {

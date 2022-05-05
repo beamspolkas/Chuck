@@ -11,12 +11,13 @@ import com.example.chuck.holders.RecyclerViewHolder
 import com.example.chuck.model.Post
 import com.example.chuck.util.ImgUrls
 import com.example.chuck.util.WhichImage
-import kotlin.collections.ArrayList
 
 class RecyclerViewAdapter(private val mList: MutableList<Post>,
                           private val context: Context,
                           private val imgUrls: ArrayList<String>,
                           private val whichImage: WhichImage) : RecyclerView.Adapter<RecyclerViewHolder>() {
+
+    //private var isChecked = false
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -45,6 +46,19 @@ class RecyclerViewAdapter(private val mList: MutableList<Post>,
             }
         }
         holderRecycler.value.text = itemsViewModel.value
+
+        //https://stackoverflow.com/questions/35265865/recyclerview-causes-issue-when-recycling
+
+        var isChecked = false
+        holderRecycler.imgBtn.setOnClickListener {
+            isChecked = if(!isChecked){
+                holderRecycler.imgBtn.setImageResource(R.drawable.fav_filled)
+                true
+            } else {
+                holderRecycler.imgBtn.setImageResource(R.drawable.fav_empty)
+                false
+            }
+        }
     }
 
     override fun getItemCount(): Int {

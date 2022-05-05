@@ -1,11 +1,14 @@
 package com.example.chuck.fragments
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
@@ -66,13 +69,13 @@ class JokeSearcherFragment : Fragment() {
     private fun setOnClickListener(){
         val searchButton = view?.findViewById<ImageButton>(R.id.btn_search)
         val textEditText = view?.findViewById<TextView>(R.id.text_editText)
-        searchButton?.setOnClickListener{
+        searchButton?.setOnClickListener {
             val myText = textEditText?.text.toString()
             viewModel.getJokes(myText)
             viewModel.myResponse.observe(viewLifecycleOwner) { responses ->
                 Log.d("Responses: ", responses.body().toString())
                 if (responses.isSuccessful) {
-                    if(responses.body()?.result?.isEmpty() == true) {
+                    if (responses.body()?.result?.isEmpty() == true) {
                         InfoDialog().build(
                             requireContext(),
                             "Error",
@@ -85,13 +88,12 @@ class JokeSearcherFragment : Fragment() {
                         )
                     } else {
                         responses.body()?.result?.let {
-                                adapter.setData(it.toMutableList())
+                            adapter.setData(it.toMutableList())
                         }
+                        hideKeyboard()
 //                        for (response in responses.body()?.result!!) {
-//                            val fragmentActivityMessageEvent: Events.FragmentToActivityMessage =
-//                                Events.FragmentToActivityMessage(response.value)
-//                            bus?.post(fragmentActivityMessageEvent)
-//                        }
+//                            val fragmentActivityMessageEvent: Events.FragmentToActivityMessage =Events.FragmentToActivityMessage(response.value)
+//                            bus?.post(fragmentActivityMessageEvent) }
                     }
                 } else {
                     Log.d("Response - error: ", responses.errorBody().toString())
@@ -100,14 +102,18 @@ class JokeSearcherFragment : Fragment() {
         }
     }
 
+    private fun Fragment.hideKeyboard() {
+        view?.let { activity?.hideKeyboard(it) }
+    }
+
+    private fun Context.hideKeyboard(view: View) {
+        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
     @Subscribe
     fun getMessage(activityFragmentMessage: Events.ActivityToFragmentMessage) {
-        Toast.makeText(
-            activity,
-            getString(R.string.message_fragment) +
-                    " " + activityFragmentMessage.message,
-            Toast.LENGTH_SHORT
-        ).show()
+//        Toast.makeText(activity, getString(R.string.message_fragment) + " " + activityFragmentMessage.message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroyView() {

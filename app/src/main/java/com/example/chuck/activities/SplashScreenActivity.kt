@@ -1,4 +1,4 @@
-package com.example.chuck.screens
+package com.example.chuck.activities
 
 import android.annotation.SuppressLint
 import android.content.Intent
